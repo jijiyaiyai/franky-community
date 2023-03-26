@@ -15,6 +15,9 @@ public class RedisConfig {
         RedisTemplate<String,Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 
+        //重新写序列化和反序列化方式是为了更准确
+        //因为已设置数据存储的格式就是String到json
+
         // 设置key的序列化方式
         template.setKeySerializer(RedisSerializer.string());
         // 设置value的序列化方式
