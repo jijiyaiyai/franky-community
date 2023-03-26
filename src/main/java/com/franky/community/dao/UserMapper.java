@@ -14,8 +14,10 @@ public interface UserMapper {
 
     int insertUser(User user);
 
+    //更新账号激活状态
     int updateStatus(int id, int status);
 
+    //更新头像
     int updateHeader(int id, String headerUrl);
 
     int updatePassword(int id, String password);
