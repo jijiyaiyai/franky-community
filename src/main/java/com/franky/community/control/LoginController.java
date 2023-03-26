@@ -6,6 +6,8 @@ import com.franky.community.tool.CommunityConstant;
 import com.google.code.kaptcha.Producer;
 import jakarta.mail.MessagingException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,8 @@ public class LoginController implements CommunityConstant {
 
     @Autowired
     private Producer kaptchaProducer;
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -95,7 +99,7 @@ public class LoginController implements CommunityConstant {
             OutputStream os = response.getOutputStream();
             ImageIO.write(image, "png", os);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("响应验证码失败:" + e.getMessage());
         }
     }
 

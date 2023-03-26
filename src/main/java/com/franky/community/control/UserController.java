@@ -6,6 +6,8 @@ import com.franky.community.service.UserService;
 import com.franky.community.tool.CommunityUtil;
 import com.franky.community.tool.HostHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,8 @@ public class UserController {
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -71,6 +75,7 @@ public class UserController {
             // 存储文件, mutipart模块实现
             headerImage.transferTo(dest);
         } catch (IOException e) {
+            logger.error("上传文件失败: " + e.getMessage());
             throw new RuntimeException("上传文件失败,服务器发生异常!", e);
         }
 
@@ -103,7 +108,7 @@ public class UserController {
                 os.write(buffer, 0, b);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("读取头像失败: " + e.getMessage());
         }
     }
 

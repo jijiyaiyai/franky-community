@@ -11,12 +11,16 @@ public interface LoginTicketMapper {
 //                    "values ( #{userId},#{ticket},#{status},#{expired})"
 //    })
 //    @Options(useGeneratedKeys = true, keyProperty = "id")
+
+    //新增登录凭证
     int insertLoginTicket(LoginTicket loginTicket);
 
 //    @Select({
 //            "select id,user_id,ticket,status,expired ",
 //            "from login_ticket where ticket=#{ticket}"
 //    })
+
+    //查找登录凭证
     LoginTicket selectByTicket(String ticket);
 
 //    @Update({
@@ -27,6 +31,8 @@ public interface LoginTicketMapper {
 ////            "</if>",
 //            "</script>"
 //    })
+
+    // 更新登录凭证的状态
     int updateStatus(String ticket, int status);
 
 }

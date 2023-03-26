@@ -14,4 +14,13 @@ public interface DiscussPostMapper {
 
     //要使用动态sql而且只有一个参数的话就必须取别名
     int selectDiscussPost_count(@Param("userId") int userId);
+
+    //新增帖子
+    int insertDiscussPost(DiscussPost discussPost);
+
+    //查询帖子的详情
+    DiscussPost selectDiscussPostById(int id);
+
+    //当有人回复你之后，需要用这个方法更新表中数据
+    int updateCommentCount(int id, int commentCount);
 }

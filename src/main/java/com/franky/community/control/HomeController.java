@@ -25,6 +25,11 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping(path = "/error",method = RequestMethod.GET)
+    public String getErrorPage(){
+        return "/error/500";
+    }
+
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page) {
         // 方法调用前,SpringMVC会自动实例化Model和Page,并将Page注入Model.
@@ -46,5 +51,7 @@ public class HomeController {
         model.addAttribute("discussPosts", discussPosts);
         return "index";
     }
+
+
 
 }
