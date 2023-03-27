@@ -116,6 +116,7 @@ public class MessageController {
                 : userService.findUserById(id0);
 
     }
+
     private List<Integer> getUnreadLetterIDs(List<Message> letterList){
         List<Integer>ids = new ArrayList<>();
         for (Message m: letterList){

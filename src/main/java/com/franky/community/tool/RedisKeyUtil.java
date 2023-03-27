@@ -12,6 +12,10 @@ public class RedisKeyUtil {
 
     private static final String PREFIX_KAPTCHA = "kaptcha";
 
+    private static final String PREFIX_TICKET = "ticket";
+
+    private static final String PREFIX_USER = "user";
+
     // 某个实体的赞
     // like:entity:entityType:entityId -> set(userId) (给这条实体点赞的用户集合)
     public static String generateEntityLikeKey(int entityType, int entityId) {
@@ -37,8 +41,20 @@ public class RedisKeyUtil {
     }
 
     //生成登录验证码的key
-    //这个时候还没登录，所以用ticket代替
     public static String generateKaptchaKey(String owner) {
         return PREFIX_KAPTCHA + SPLIT + owner;
+    }
+
+    //生成登录凭证的key
+    public static String generateTicketKey(String ticket) {
+        return PREFIX_TICKET + SPLIT + ticket;
+    }
+
+    //用户
+    public static String generateUserIDKey(int userId) {
+        return PREFIX_USER + SPLIT + userId;
+    }
+    public static String generateUserNameKey(String userName) {
+        return PREFIX_USER + SPLIT + userName;
     }
 }
