@@ -4,7 +4,9 @@ import com.franky.community.entity.DiscussPost;
 import com.franky.community.entity.Page;
 import com.franky.community.entity.User;
 import com.franky.community.service.DiscussPostService;
+import com.franky.community.service.LikeService;
 import com.franky.community.service.UserService;
+import com.franky.community.tool.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
 
     @Autowired
     private DiscussPostService discussPostService;
+
+    @Autowired
+    private LikeService likeService;
 
     @Autowired
     private UserService userService;
@@ -46,6 +51,9 @@ public class HomeController {
                 User user = userService.findUserById(post.getUserId());
                 map.put("user", user);
                 discussPosts.add(map);
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount", likeCount);
             }
         }
         model.addAttribute("discussPosts", discussPosts);
