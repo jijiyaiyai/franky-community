@@ -4,8 +4,8 @@ package com.franky.community.control.interceptor;
 import com.franky.community.control.LikeController;
 import com.franky.community.control.UserController;
 import com.franky.community.tool.HostHolder;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -28,9 +28,8 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
             Method handlerMethod = ((HandlerMethod) handler).getMethod();
             Set<Method> MethodSet = new HashSet<>();
             MethodSet.add(UserController.class.getMethod("getSettingPage"));
-            MethodSet.add(LikeController.class.getMethod("like", int.class, int.class, int.class));
-//            System.out.println(handlerMethod.getMethod());
-//            System.out.println(UserController.class.getMethod("getSettingPage"));
+            //MethodSet.add(LikeController.class.getMethod("like", int.class, int.class, int.class));
+
             if(MethodSet.contains(handlerMethod)
                     && hostHolder.getUser() == null){
                 response.sendRedirect(request.getContextPath()+"/login");

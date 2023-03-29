@@ -10,10 +10,13 @@ import java.util.List;
 public interface DiscussPostMapper {
 
     //分页获取帖子，userID将被用于开发个人主页功能
-    List<DiscussPost> selectDiscussPosts_bypage(int userId,int offset, int limit);
+    List<DiscussPost> selectDiscussPosts_bypage(int userId, int offset, int limit);
 
     //要使用动态sql而且只有一个参数的话就必须取别名
     int selectDiscussPost_count(@Param("userId") int userId);
+
+    //查找某个作者发起的全部讨论
+    List<DiscussPost> selectDiscussPosts_byUserId(@Param("userId") int userId);
 
     //新增帖子
     int insertDiscussPost(DiscussPost discussPost);

@@ -1,7 +1,7 @@
 package com.franky.community.tool;
 
 import com.franky.community.FrankyCommunityApplication;
-import jakarta.mail.MessagingException;
+import javax.mail.MessagingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

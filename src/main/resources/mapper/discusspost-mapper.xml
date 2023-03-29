@@ -46,6 +46,15 @@
         where id = #{id}
     </select>
 
+    <select id="selectDiscussPosts_byUserId" resultType="DiscussPost">
+        select <include refid="selectFields"/>
+        from discuss_post
+        where status!=2
+        <if test="userId!=0">
+            and user_id = #{userId}
+        </if>
+    </select>
+
     <update id="updateCommentCount">
         update discuss_post
         set comment_count = #{commentCount}
