@@ -47,6 +47,9 @@ public interface CommunityConstant {
     //事件：私信：
     String TOPIC_DM = "dm";
 
+    //事件：发帖：
+    String TOPIC_PUBLISH = "publish";
+
     //系统的标识号
     int SYSTEM_USER_ID = 0;
 

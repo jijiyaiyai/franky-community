@@ -1,13 +1,8 @@
 package com.franky.community.control;
 
-import com.franky.community.entity.Comment;
-import com.franky.community.entity.DiscussPost;
-import com.franky.community.entity.Page;
-import com.franky.community.entity.User;
-import com.franky.community.service.CommentService;
-import com.franky.community.service.DiscussPostService;
-import com.franky.community.service.LikeService;
-import com.franky.community.service.UserService;
+import com.franky.community.entity.*;
+import com.franky.community.event.EventProducer;
+import com.franky.community.service.*;
 import com.franky.community.tool.CommunityConstant;
 import com.franky.community.tool.CommunityUtil;
 import com.franky.community.tool.HostHolder;
@@ -38,6 +33,9 @@ public class DiscussPostController implements CommunityConstant {
     private LikeService likeService;
 
     @Autowired
+    private EventProducer eventProducer;
+
+    @Autowired
     private HostHolder hostHolder;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
@@ -54,6 +52,14 @@ public class DiscussPostController implements CommunityConstant {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         // 报错的情况,将来统一处理.
         return CommunityUtil.getJSONString(0, "发布成功!");
