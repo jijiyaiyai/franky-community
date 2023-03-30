@@ -15,6 +15,8 @@ public class RedisKeyUtil {
     private static final String PREFIX_TICKET = "ticket";
 
     private static final String PREFIX_USER = "user";
+    private static final String PREFIX_UV = "uv";
+    private static final String PREFIX_DAU = "dau";
 
     // 某个实体的赞
     // like:entity:entityType:entityId -> set(userId) (给这条实体点赞的用户集合)
@@ -56,5 +58,25 @@ public class RedisKeyUtil {
     }
     public static String generateUserNameKey(String userName) {
         return PREFIX_USER + SPLIT + userName;
+    }
+
+    // 单日UV
+    public static String generateUVKey(String date) {
+        return PREFIX_UV + SPLIT + date;
+    }
+
+    // 区间UV
+    public static String generateUVKey(String startDate, String endDate) {
+        return PREFIX_UV + SPLIT + startDate + SPLIT + endDate;
+    }
+
+    // 单日活跃用户
+    public static String generateDAUKey(String date) {
+        return PREFIX_DAU + SPLIT + date;
+    }
+
+    // 区间活跃用户
+    public static String generateDAUKey(String startDate, String endDate) {
+        return PREFIX_DAU + SPLIT + startDate + SPLIT + endDate;
     }
 }

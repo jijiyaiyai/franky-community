@@ -125,7 +125,7 @@ a:hover {
 	display: inline-block;
 	width: 7px;
 	height: 7px;
-	background: #ff6547;
+	background: #ff5647;
 	margin-bottom: 2px;
 	margin-right: 3px;
 }
@@ -141,5 +141,5 @@ a:hover {
 
 em {
 	font-style: normal;
-	color: red;
+	color: #37ff00;
 }

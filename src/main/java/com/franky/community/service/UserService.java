@@ -13,14 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -28,9 +26,6 @@ public class UserService implements CommunityConstant {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private LoginTicketMapper loginTicketMapper;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -102,10 +97,29 @@ public class UserService implements CommunityConstant {
         return (LoginTicket) redisTemplate.opsForValue().get(redisKey);
     }
 
+    //获取用户权限标识，转化为字符串
+    public Collection<? extends GrantedAuthority> getAuthorities(int userId) {
+        User user = this.findUserById(userId);
+
+        List<GrantedAuthority> list = new ArrayList<>();
+        list.add((GrantedAuthority) () -> {
+            switch (user.getType()) {
+                case 1:
+                    return AUTHORITY_ADMIN;
+                case 2:
+                    return AUTHORITY_MODERATOR;
+                default:
+                    return AUTHORITY_USER;
+            }
+        });
+        return list;
+    }
+
     //注册服务 /////////////////////////////////////////////////////////////////////
 
-    // 传入User对象（也就是在表单那里封装好，提交上来）
-    // 然后进行各项空值的判断等等
+    /**
+    传入User对象（也就是在表单那里封装好，提交上来）然后进行各项空值的判断等等
+    */
     public Map<String, Object> register(User user) throws MessagingException {
         Map<String, Object> map = new HashMap<>();
 

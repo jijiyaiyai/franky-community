@@ -26,4 +26,8 @@ public interface DiscussPostMapper {
 
     //当有人回复你之后，需要用这个方法更新表中数据
     int updateCommentCount(int id, int commentCount);
+
+    int updateType(int id, int type);
+
+    int updateStatus(int id, int status);
 }
