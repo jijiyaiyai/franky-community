@@ -10,7 +10,8 @@ import java.util.List;
 public interface DiscussPostMapper {
 
     //分页获取帖子，userID将被用于开发个人主页功能
-    List<DiscussPost> selectDiscussPosts_bypage(int userId, int offset, int limit);
+    //ordermod：0，按时间排序，1，按热度排序
+    List<DiscussPost> selectDiscussPosts_bypage(int userId, int offset, int limit, int orderMod);
 
     //要使用动态sql而且只有一个参数的话就必须取别名
     int selectDiscussPost_count(@Param("userId") int userId);
@@ -30,4 +31,8 @@ public interface DiscussPostMapper {
     int updateType(int id, int type);
 
     int updateStatus(int id, int status);
+
+    //更新帖子的热度
+    int updateScore(int id, double score);
+
 }

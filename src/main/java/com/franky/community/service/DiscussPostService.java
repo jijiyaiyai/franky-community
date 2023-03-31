@@ -15,8 +15,8 @@ public class DiscussPostService {
     @Autowired
     private DiscussPostMapper discussPostMapper;
 
-    public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit){
-        return discussPostMapper.selectDiscussPosts_bypage(userId,offset,limit);
+    public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit, int ordermod){
+        return discussPostMapper.selectDiscussPosts_bypage(userId,offset,limit,ordermod);
     }
 
     public int findDiscussPostCount(int userId){
@@ -49,5 +49,9 @@ public class DiscussPostService {
 
     public int updateStatus(int id, int status) {
         return discussPostMapper.updateStatus(id, status);
+    }
+
+    public int updateScore(int id, double score){
+        return discussPostMapper.updateScore(id,score);
     }
 }

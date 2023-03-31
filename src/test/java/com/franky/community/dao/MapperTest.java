@@ -59,7 +59,7 @@ public class MapperTest {
 
    @Test
     public void testSelectDiscussPosts_page(){
-       List<DiscussPost> list = discussPostMapper.selectDiscussPosts_bypage(149, 0, 10);
+       List<DiscussPost> list = discussPostMapper.selectDiscussPosts_bypage(149, 0, 10, 0);
        for (DiscussPost post : list) {
            System.out.println(post);
        }
