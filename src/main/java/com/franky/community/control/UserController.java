@@ -1,10 +1,11 @@
 package com.franky.community.control;
 
 
+import com.franky.community.entity.Comment;
+import com.franky.community.entity.DiscussPost;
+import com.franky.community.entity.Page;
 import com.franky.community.entity.User;
-import com.franky.community.service.FollowService;
-import com.franky.community.service.LikeService;
-import com.franky.community.service.UserService;
+import com.franky.community.service.*;
 import com.franky.community.tool.CommunityConstant;
 import com.franky.community.tool.CommunityUtil;
 import com.franky.community.tool.HostHolder;
@@ -24,10 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Min;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -61,6 +65,12 @@ public class UserController implements CommunityConstant {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private DiscussPostService discussPostService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private FollowService followService;
@@ -160,6 +170,26 @@ public class UserController implements CommunityConstant {
         model.addAttribute("hasFollowed", hasFollowed);
 
         return "/site/profile";
+    }
+
+    // 我的回复
+    @RequestMapping(path = "/my-reply/{userId}", method = RequestMethod.GET)
+    public String getMyreplyPage(@PathVariable("userId") int userId, Model model) {
+        User user =userService.findUserById(userId);
+        model.addAttribute(user);
+        List<Comment> mycomments = commentService.findCommentByUserId(userId);
+        model.addAttribute("mycomments", mycomments);
+        return "/site/my-reply";
+    }
+
+    // 我的帖子
+    @RequestMapping(path = "/my-post/{userId}", method = RequestMethod.GET)
+    public String getMypostPage(@PathVariable("userId") int userId, Model model) {
+        User user =userService.findUserById(userId);
+        model.addAttribute(user);
+        List<DiscussPost> myposts = discussPostService.findDiscussPosts_byuserid(userId);
+        model.addAttribute("myposts", myposts);
+        return "/site/my-post";
     }
 
     /////////////////////////////////////// 已废弃 //////////////////////////////////////////////////////

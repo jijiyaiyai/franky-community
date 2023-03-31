@@ -18,4 +18,6 @@ public interface CommentMapper {
     int insertComment(Comment comment);
 
     Comment selectCommentById(int entityId);
+
+    List<Comment> selectCommentByUserId(int userId);
 }

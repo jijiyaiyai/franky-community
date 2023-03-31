@@ -33,6 +33,10 @@ public class CommentService implements CommunityConstant {
         return commentMapper.selectCommentById(entityId);
     }
 
+    public List<Comment> findCommentByUserId(int userId){
+        return commentMapper.selectCommentByUserId(userId);
+    }
+
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public int addComment(Comment comment){
         if(comment == null){

@@ -16,8 +16,12 @@ public class DiscussPostService {
     @Autowired
     private DiscussPostMapper discussPostMapper;
 
-    public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit, int ordermod){
+    public List<DiscussPost> findDiscussPosts_bypage(int userId, int offset, int limit, int ordermod){
         return discussPostMapper.selectDiscussPosts_bypage(userId,offset,limit,ordermod);
+    }
+
+    public List<DiscussPost> findDiscussPosts_byuserid(int userId){
+        return discussPostMapper.selectDiscussPosts_byUserId(userId);
     }
 
     public int findDiscussPostCount(int userId){
