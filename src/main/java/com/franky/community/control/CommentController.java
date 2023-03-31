@@ -41,9 +41,11 @@ public class CommentController implements CommunityConstant {
     @RequestMapping(path = "/add/{discussPostId}", method = RequestMethod.POST)
     public String addComment(@PathVariable("discussPostId") int discussPostId, Comment comment) {
         //userID就是当前用户的ID
+        Date commentTime = new Date();
         comment.setUserId(hostHolder.getUser().getId());
         comment.setStatus(0);
-        comment.setCreateTime(new Date());
+        comment.setCreateTime(commentTime);
+        discussPostService.updateTime(discussPostId,commentTime);
         commentService.addComment(comment);
 
         Event event = new Event()

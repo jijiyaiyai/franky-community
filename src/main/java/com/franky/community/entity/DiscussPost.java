@@ -37,6 +37,9 @@ public class DiscussPost {
     @Field(type = FieldType.Date)
     private Date createTime;
 
+    @Field(type = FieldType.Date)
+    private Date updateTime;
+
     @Field(type = FieldType.Integer)
     private int commentCount;
 

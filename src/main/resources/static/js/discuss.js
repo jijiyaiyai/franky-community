@@ -14,21 +14,18 @@ function like(btn, entityType, entityId, entityUserId, postId) {
     );
 }
 
-$(function(){
-    $("#topBtn").click(setTop);
-    $("#wonderfulBtn").click(setWonderful);
-    $("#deleteBtn").click(setDelete);
-});
 
 // 置顶
-function setTop() {
+function setTop(topBtn, type) {
+    if (type == 0)type = 1;
+    else type = 0;
     $.post(
         CONTEXT_PATH + "/discuss/top",
-        {"id":$("#postId").val()},
+        {"id":$("#postId").val(), "type":type},
         function(data) {
             data = $.parseJSON(data);
             if(data.code == 0) {
-                $("#topBtn").attr("disabled", "disabled");
+                $(topBtn).text(data.type==1?'已置顶':'置顶');
             } else {
                 alert(data.msg);
             }
@@ -37,20 +34,26 @@ function setTop() {
 }
 
 // 加精
-function setWonderful() {
+function setWonderful(wonderfulBtn, status) {
+    if (status == 0)status = 1;
+    else status = 0;
     $.post(
         CONTEXT_PATH + "/discuss/wonderful",
-        {"id":$("#postId").val()},
+        {"id":$("#postId").val(), "status":status},
         function(data) {
             data = $.parseJSON(data);
             if(data.code == 0) {
-                $("#wonderfulBtn").attr("disabled", "disabled");
+                $(wonderfulBtn).text(data.status==1?'已加精':'加精');
             } else {
                 alert(data.msg);
             }
         }
     );
 }
+
+$(function(){
+    $("#topBtn").click(setTop);
+});
 
 // 删除
 function setDelete() {

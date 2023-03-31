@@ -5,11 +5,11 @@
 <mapper namespace="com.franky.community.dao.DiscussPostMapper">
 
     <sql id="selectFields">
-        id, user_id, title, content, type, status, create_time, comment_count, score
+        id, user_id, title, content, type, status, create_time, comment_count, score, update_time
     </sql>
 
     <sql id="insertFields">
-        user_id, title, content, type, status, create_time, comment_count, score
+        user_id, title, content, type, status, create_time, comment_count, score, update_time
     </sql>
 
 
@@ -22,10 +22,10 @@
             and user_id = #{userId}
         </if>
         <if test="orderMod==0">
-            order by type desc, create_time desc
+            order by type desc, update_time desc, create_time desc
         </if>
         <if test="orderMod==1">
-            order by type desc, score desc, create_time desc
+            order by type desc, score desc, update_time desc, create_time desc
         </if>
         limit #{offset}, #{limit}
     </select>
@@ -75,5 +75,16 @@
 
     <update id="updateScore">
         update discuss_post set score = #{score} where id = #{id}
+    </update>
+
+    <update id="updatePost">
+        update discuss_post
+        set title = #{title}, content = #{content}, create_time = #{date}
+        where id = #{id}
+    </update>
+    <update id="updateTime">
+        update discuss_post
+        set update_time = #{commentTime}
+        where id = #{id}
     </update>
 </mapper>

@@ -5,7 +5,7 @@ html {
 body {
 	background: #eee;
 	font-family: arial, STHeiti, 'Microsoft YaHei', \5b8b\4f53;
-	font-size: 14px;
+	font-size: 16px;
 	height: 100%;
 }
 
@@ -16,12 +16,12 @@ body {
 }
 
 .container {
-	width: 960px;
+	width: 1920px;
 	padding: 0;
 }
 
 header .navbar-brand {
-	background: url('http://static.nowcoder.com/images/res/logo/logo-v3.png') no-repeat;
+	background: url('../img/logo.png') no-repeat;
 	background-size: 147px 42px;
 	width: 147px;
 	height: 42px;
@@ -47,26 +47,14 @@ footer {
 	width: 100%;
 }
 
-footer .qrcode {
-	text-align: center;
-}
-
-footer .detail-info{
-	border-left: 1px solid #888;
-}
-
-footer .company-info li {
-	padding-left: 16px;
-	margin: 4px 0;
-}
 
 .main {
 	padding: 20px 0;
-	padding-bottom: 200px;
+	padding-bottom: 50px;
 }
 
 .main .container {
-	background: #fff;
+	background: #ffffff;
 	padding: 20px;
 }
 

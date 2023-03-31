@@ -76,18 +76,13 @@ public class DiscussPostController implements CommunityConstant {
 
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String editDiscussPost(String title, String content) {
+    public String editDiscussPost(int DiscussPostId, String title, String content) {
         User user = hostHolder.getUser();
         if (user == null) {
             return CommunityUtil.getJSONString(403, "你还没有登录哦!");
         }
 
-        DiscussPost post = new DiscussPost();
-        post.setUserId(user.getId());
-        post.setTitle(title);
-        post.setContent(content);
-        post.setCreateTime(new Date());
-        discussPostService.addDiscussPost(post);
+        DiscussPost post = discussPostService.editDiscussPost(DiscussPostId,title,content,new Date());
 
         // 触发发帖事件
         Event event = new Event()
@@ -101,7 +96,7 @@ public class DiscussPostController implements CommunityConstant {
         String redisKey = RedisKeyUtil.getPostScoreKey();
         redisTemplate.opsForSet().add(redisKey, post.getId());
 
-        return CommunityUtil.getJSONString(0, "发布成功!");
+        return CommunityUtil.getJSONString(0, "编辑成功!");
     }
 
     @RequestMapping(path = "/detail/{discussPostId}", method = RequestMethod.GET)
@@ -195,8 +190,8 @@ public class DiscussPostController implements CommunityConstant {
     // 置顶
     @RequestMapping(path = "/top", method = RequestMethod.POST)
     @ResponseBody
-    public String setTop(int id) {
-        discussPostService.updateType(id, 1);
+    public String setTop(int id, int type) {
+        discussPostService.updateType(id, type);
 
         // 触发发帖事件
         Event event = new Event()
@@ -205,15 +200,17 @@ public class DiscussPostController implements CommunityConstant {
                 .setEntityType(ENTITY_TYPE_POST)
                 .setEntityId(id);
         eventProducer.fireEvent(event);
+        Map<String, Object>map = new HashMap<>();
+        map.put("type",type);
 
-        return CommunityUtil.getJSONString(0);
+        return CommunityUtil.getJSONString(0,null,map);
     }
 
     // 加精
     @RequestMapping(path = "/wonderful", method = RequestMethod.POST)
     @ResponseBody
-    public String setWonderful(int id) {
-        discussPostService.updateStatus(id, 1);
+    public String setWonderful(int id, int status) {
+        discussPostService.updateStatus(id, status);
 
         // 触发发帖事件
         Event event = new Event()
@@ -223,11 +220,14 @@ public class DiscussPostController implements CommunityConstant {
                 .setEntityId(id);
         eventProducer.fireEvent(event);
 
+        Map<String, Object>map = new HashMap<>();
+        map.put("status",status);
+
         // 计算帖子分数
         String redisKey = RedisKeyUtil.getPostScoreKey();
         redisTemplate.opsForSet().add(redisKey, id);
 
-        return CommunityUtil.getJSONString(0);
+        return CommunityUtil.getJSONString(0,null,map);
     }
 
     // 删除

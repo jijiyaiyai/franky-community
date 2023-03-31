@@ -4,6 +4,7 @@ import com.franky.community.entity.DiscussPost;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -35,4 +36,8 @@ public interface DiscussPostMapper {
     //更新帖子的热度
     int updateScore(int id, double score);
 
+    //修改帖子
+    DiscussPost updatePost(int id, String title, String content, Date date);
+
+    void updateTime(int id, Date commentTime);
 }

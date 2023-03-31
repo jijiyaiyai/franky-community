@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,5 +54,13 @@ public class DiscussPostService {
 
     public int updateScore(int id, double score){
         return discussPostMapper.updateScore(id,score);
+    }
+
+    public DiscussPost editDiscussPost(int discussPostId, String title, String content, Date date) {
+        return discussPostMapper.updatePost(discussPostId,title,content,date);
+    }
+
+    public void updateTime(int discussPostId, Date commentTime) {
+        discussPostMapper.updateTime(discussPostId,commentTime);
     }
 }
