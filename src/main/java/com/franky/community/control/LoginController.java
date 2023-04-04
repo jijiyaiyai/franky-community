@@ -57,7 +57,6 @@ public class LoginController implements CommunityConstant {
         return "/site/login";
     }
 
-
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public String register(Model model, User user) throws MessagingException {
         Map<String, Object> map = userService.register(user);
@@ -73,6 +72,7 @@ public class LoginController implements CommunityConstant {
             return "/site/register";
         }
     }
+
 
     // http://localhost:8080/community/activation/101/code
     //从路径中获取验证码和用户ID
